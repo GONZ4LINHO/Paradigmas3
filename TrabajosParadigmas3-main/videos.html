@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos</title>
+    <style>
+        body {
+            background-color: yellow;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        video {
+            display: block;
+            margin: 20px auto;
+            width: 80%;
+            border: 5px solid blue; /* Añade un borde azul alrededor del video */
+        }
+    </style>
+</head>
+<body>
+    <h1>Videos</h1>
+    
+    <button onclick="changeVideo(1)">Video 1</button>
+    <button onclick="changeVideo(2)">Video 2</button>
+    <button onclick="changeVideo(3)">Video 3</button>
+
+    <video id="videoPlayer" autoplay controls>
+        <source id="videoSource" src="VIDEO ATARDECER TUMBLR 2021.mp4" type="video/mp4">
+    </video>
+
+    <script>
+    function changeVideo(numeroVideo) {
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoSource = document.getElementById('videoSource');
+     
+        if (numeroVideo === 1) {
+            videoSource.src = 'VIDEO ATARDECER TUMBLR 2021.mp4'; 
+        } else if (numeroVideo === 2) {
+            videoSource.src = 'Motosierra STIHL - MS260.mp4';  
+        } else {
+            videoSource.src = 'video playa corto mp4.mp4'; 
+        }
+
+        localStorage.setItem('video', numeroVideo);
+        localStorage.setItem('currentTime', 0);
+
+        videoPlayer.load();
+        videoPlayer.play();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoSource = document.getElementById('videoSource');
+        const savedVideo = localStorage.getItem('video');
+        const savedTime = localStorage.getItem('currentTime');
+
+        if (savedVideo === "1") {
+            videoSource.src = 'VIDEO ATARDECER TUMBLR 2021.mp4'; 
+        } else if (savedVideo === "2") {
+            videoSource.src = 'Motosierra STIHL - MS260.mp4';  
+        } else {
+            videoSource.src = 'video playa corto mp4.mp4'; 
+        }
+
+        videoPlayer.load();
+
+        if (savedTime) {
+            videoPlayer.currentTime = savedTime;
+        }
+
+        videoPlayer.play();
+    });
+
+    window.addEventListener('beforeunload', function() {
+        const videoPlayer = document.getElementById('videoPlayer');
+        localStorage.setItem('currentTime', videoPlayer.currentTime);
+    });
+    </script>
+</body>
+</html>
+
+
